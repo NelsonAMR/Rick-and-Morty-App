@@ -6,10 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 function Form() {
   const navigate = useNavigate();
-  const formInit = { user: "", pass: "" };
-  const errInit = { user: "", pass: "" };
-  const [userData, setUserData] = useState(formInit);
-  const [errors, setErrors] = useState(errInit);
+  const [userData, setUserData] = useState({ user: "", pass: "" });
+  const [errors, setErrors] = useState({});
   const [access, setAccess] = useState(false);
 
   const handleChange = (e) => {
@@ -25,17 +23,17 @@ function Form() {
 
     if (!user || !pass) {
       const obj = {};
-      if (!user) obj.user = "";
-      if (!pass) obj.pass = "";
+      if (!user) obj.user = "Debe ingresar su correo";
+      if (!pass) obj.pass = "Debe ingresar su contraseña";
 
-      setErrors(validation({ ...userData, ...obj }));
+      setErrors({ ...obj });
 
       return;
     }
 
-    if (!Object.keys(errors).some((key) => errors[key])) {
-      setUserData(formInit);
-      setErrors(errInit);
+    if (!Object.entries(errors).length) {
+      setUserData({ user: "", pass: "" });
+      setErrors({});
       setAccess(true);
     } else {
       alert("Debe llenar todos los campos");
@@ -62,7 +60,7 @@ function Form() {
             onChange={handleChange}
             className={errors.user && "error"}
           />
-          {errors.user && <p className="error">{errors.user}</p>}
+          {errors.user && <p>{errors.user}</p>}
         </div>
         <div className="form-camp">
           <input
@@ -74,7 +72,7 @@ function Form() {
             onChange={handleChange}
             className={errors.pass && "error"}
           />
-          {errors.pass && <p className="error">{errors.pass}</p>}
+          {errors.pass && <p>{errors.pass}</p>}
         </div>
         <button type="submit" className="form-button">
           Ingresar
