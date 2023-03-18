@@ -1,0 +1,25 @@
+.about {
+  width: 95%;
+  max-width: 85rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 5rem auto;
+  padding-top: 6rem;
+}
+
+.about-cont {
+  background-color: #fff;
+  border-radius: 1rem;
+  border: 0.25rem solid #000;
+  padding: 1rem 2rem;
+  max-width: 40rem;
+}
+
+@media (max-width: 600px) {
+  .about {
+    margin: 2rem auto;
+    padding-top: 0;
+  }
+}

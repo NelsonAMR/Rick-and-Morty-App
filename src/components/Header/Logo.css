@@ -1,8 +1,9 @@
 .logo {
   width: 15rem;
+  min-width: 15rem;
 }
 
-.logo > img {
+.logo-img {
   width: 100%;
 }
 

@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Cards from "./components/Cards/Cards.jsx";
-import NavBar from "./components/NavBar/NavBar";
+import Header from "./components/Header/Header";
 import About from "./pages/About";
 import Detail from "./pages/Detail";
+import Error from "./pages/Error";
+import Favorites from "./pages/Favorites";
+import Form from "./pages/Form";
 
 function App() {
   const url = "https://rickandmortyapi.com/api/character";
@@ -14,7 +17,7 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         if (data.name && !characters.find((char) => char.id === data.id)) {
-          setCharacters((oldChars) => [...oldChars, data]);
+          setCharacters((oldChars) => [data, ...oldChars]);
         } else {
           window.alert("No hay personajes con ese ID");
         }
@@ -25,16 +28,21 @@ function App() {
     setCharacters(characters.filter((character) => character.id !== id));
   };
 
+  const { pathname } = useLocation();
+
   return (
     <div className="App">
-      <NavBar onSearch={onSearch} />
+      {pathname !== "/" && <Header onSearch={onSearch} />}
       <Routes>
+        <Route path="/" element={<Form />} />
         <Route
           path="/home"
           element={<Cards characters={characters} onClose={onClose} />}
         />
         <Route path="/about" element={<About />} />
-        <Route path="/about" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/favorites" element={<Favorites onClose={onClose} />} />
+        <Route path="/*" element={<Error />} />
       </Routes>
     </div>
   );

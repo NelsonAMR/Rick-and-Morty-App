@@ -1,0 +1,53 @@
+.favorites {
+  width: 95%;
+  max-width: 85rem;
+  margin: 8rem auto;
+  gap: 2rem;
+}
+
+@media (max-width: 600px) {
+  .favorites {
+    margin-top: 2rem;
+  }
+}
+
+.favorites-select {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.favorites-select > select {
+  height: 100%;
+  width: 10rem;
+  font-size: 1.2rem;
+  background-color: #4c0080;
+  color: #fff;
+  padding-inline: 0.5rem;
+  border: 0.25rem solid #000;
+  border-radius: 1rem;
+  cursor: pointer;
+  outline: none;
+}
+
+/* .favorites-select > select:hover {
+  background-color: #4c008099;
+} */
+
+.favorites-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 4rem auto;
+  width: 100%;
+}
+
+@media (max-width: 380px) {
+  .favorites-cards {
+    margin-top: 5rem;
+  }
+}

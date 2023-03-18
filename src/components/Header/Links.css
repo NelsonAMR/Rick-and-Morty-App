@@ -1,0 +1,47 @@
+.links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-right: 0.5rem;
+}
+
+@media (max-width: 750px) {
+  .links {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+.links > a {
+  color: #fff;
+  text-decoration: wavy;
+  font-size: 1rem;
+  transition: 150ms;
+}
+
+.links > a:hover {
+  /* color: #4c0080; */
+  color: #12b0c9;
+  scale: 1.1;
+}
+
+@media (max-width: 600px) {
+  .links {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .links > a {
+    font-size: 1.3rem;
+  }
+
+  .links > a:hover {
+    color: #fff;
+    scale: 1;
+  }
+
+  .links > a:active {
+    color: #12b0c9;
+    scale: 1.1;
+  }
+}

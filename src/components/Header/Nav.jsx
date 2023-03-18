@@ -1,15 +1,13 @@
 import React from "react";
+import Links from "./Links";
 import SearchBar from "./SearchBar";
-import "./NavBar.css";
-import Logo from "./Logo";
+import "./Nav.css";
 
 function Nav({ onSearch }) {
   return (
     <div className="nav">
-      <div className="nav-container">
-        <Logo />
-        <SearchBar onSearch={onSearch} />
-      </div>
+      <SearchBar onSearch={onSearch} />
+      <Links />
     </div>
   );
 }

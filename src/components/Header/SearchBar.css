@@ -6,9 +6,9 @@
   border-radius: 1rem;
   overflow: hidden;
   border: 0.25rem solid #000;
-  width: 30rem;
-  min-width: 18rem;
-  max-width: 50%;
+  width: 100%;
+  min-width: 10rem;
+  max-width: 30rem;
   /* margin: 0 auto; */
   box-sizing: content-box;
 }
