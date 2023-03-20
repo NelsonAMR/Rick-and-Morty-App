@@ -20,11 +20,17 @@ function Favorites({ onClose }) {
     <div className="favorites">
       <div className="favorites-select">
         <select name="order" onChange={handleSelect1}>
+          <option value="" disabled>
+            Order
+          </option>
           <option value="descendente">Descendente</option>
           <option value="ascendente">Ascendente</option>
         </select>
         <select name="gender" onChange={handleSelect2}>
-          <option value="Male">All</option>
+          <option value="" disabled>
+            Filter
+          </option>
+          <option value="all">All</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
           <option value="Genderless">Genderless</option>

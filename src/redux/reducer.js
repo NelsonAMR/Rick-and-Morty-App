@@ -23,9 +23,10 @@ function rootReducer(state = initialState, { type, payload }) {
     case FILTER:
       return {
         ...state,
-        favorites: state.allCharacters.filter(
-          (char) => char.gender === payload
-        ),
+        favorites: state.allCharacters.filter((char) => {
+          if (payload === "all") return [...state.favorites];
+          else return char.gender === payload;
+        }),
       };
 
     case ORDER:
