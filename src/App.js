@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Cards from "./components/Cards/Cards.jsx";
 import Header from "./components/Header/Header";
@@ -28,20 +28,21 @@ function App() {
     setCharacters(characters.filter((character) => character.id !== id));
   };
 
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
 
   return (
     <div className="App">
-      {pathname !== "/" && <Header onSearch={onSearch} />}
       <Routes>
         <Route path="/" element={<Form />} />
-        <Route
-          path="/home"
-          element={<Cards characters={characters} onClose={onClose} />}
-        />
-        <Route path="/about" element={<About />} />
-        <Route path="/detail/:id" element={<Detail />} />
-        <Route path="/favorites" element={<Favorites onClose={onClose} />} />
+        <Route element={<Header onSearch={onSearch} />}>
+          <Route
+            path="/home"
+            element={<Cards characters={characters} onClose={onClose} />}
+          />
+          <Route path="/about" element={<About />} />
+          <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/favorites" element={<Favorites onClose={onClose} />} />
+        </Route>
         <Route path="/*" element={<Error />} />
       </Routes>
     </div>
