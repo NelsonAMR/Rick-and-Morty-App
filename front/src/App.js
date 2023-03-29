@@ -10,7 +10,6 @@ import Favorites from "./pages/Favorites";
 import Form from "./pages/Form";
 
 function App() {
-  // const url = "https://rickandmortyapi.com/api/character";
   const url = "http://localhost:3001/rickandmorty/onsearch";
   const [characters, setCharacters] = useState([]);
   const onSearch = (character) => {

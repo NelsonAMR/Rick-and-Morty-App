@@ -1,4 +1,4 @@
-import { DELETE_CARD, DETAIL_CARD, FILTER, ORDER } from "./actions";
+import { CLEAR_FAV, DELETE_CARD, DETAIL_CARD, FILTER, ORDER } from "./actions";
 
 const initialState = {
   favorites: [],
@@ -10,8 +10,8 @@ function rootReducer(state = initialState, { type, payload }) {
     case DETAIL_CARD:
       return {
         ...state,
-        favorites: [...state.allCharacters, payload],
-        allCharacters: [...state.allCharacters, payload],
+        favorites: [...state.favorites, ...payload],
+        allCharacters: [...state.allCharacters, ...payload],
       };
 
     case DELETE_CARD:
@@ -38,6 +38,13 @@ function rootReducer(state = initialState, { type, payload }) {
             else return b.id - a.id;
           }),
         ],
+      };
+
+    case CLEAR_FAV:
+      return {
+        ...state,
+        favorites: [],
+        allCharacters: [],
       };
 
     default:

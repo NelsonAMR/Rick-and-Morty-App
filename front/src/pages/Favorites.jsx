@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Card from "../components/Cards/Card";
 import * as actions from "../redux/actions";
@@ -7,6 +7,11 @@ import "./Favorites.css";
 function Favorites({ onClose }) {
   const favorites = useSelector((state) => state.favorites);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(actions.clearFav());
+    dispatch(actions.detailCard());
+  }, [dispatch]);
 
   const handleSelect1 = (event) => {
     dispatch(actions.orderCards(event.target.value));

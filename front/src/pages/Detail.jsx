@@ -7,8 +7,7 @@ function Detail() {
   const { id } = useParams();
 
   useEffect(() => {
-    // const url = "https://rickandmortyapi.com/api/character";
-    const url = "http://localhost:3001/rickandmorty/detail/";
+    const url = "http://localhost:3001/rickandmorty/detail";
     fetch(`${url}/${id}`)
       .then((response) => response.json())
       .then((char) => setCharacter(char))

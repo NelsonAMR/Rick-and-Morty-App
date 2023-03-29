@@ -11,13 +11,24 @@ export default function Card(props) {
   const favorites = useSelector((state) => state.favorites);
   const [isFav, setIsFav] = useState(false);
 
+  const addFavorite = (character) => {
+    fetch("http://localhost:3001/rickandmorty/fav", {
+      method: "POST",
+      headers: {
+        Accept: "application.json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(character),
+    });
+  };
+
   const handleFav = () => {
     if (pathname === "/favorites") {
       dispatch(actions.deleteCard(props.id));
       setIsFav(false);
     } else {
       if (!isFav) {
-        dispatch(actions.detailCard(props.id));
+        addFavorite({ ...props });
         setIsFav(true);
       } else {
         dispatch(actions.deleteCard(props.id));
