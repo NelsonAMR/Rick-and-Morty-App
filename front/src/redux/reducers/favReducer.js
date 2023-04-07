@@ -1,11 +1,11 @@
-import { CLEAR_FAV, DELETE_CARD, DETAIL_CARD, FILTER, ORDER } from "./actions";
+import { CLEAR_FAV, DELETE_CARD, DETAIL_CARD, FILTER, ORDER } from "../actions";
 
 const initialState = {
   favorites: [],
   allCharacters: [],
 };
 
-function rootReducer(state = initialState, { type, payload }) {
+function favReducer(state = initialState, { type, payload }) {
   switch (type) {
     case DETAIL_CARD:
       return {
@@ -52,4 +52,4 @@ function rootReducer(state = initialState, { type, payload }) {
   }
 }
 
-export default rootReducer;
+export default favReducer;

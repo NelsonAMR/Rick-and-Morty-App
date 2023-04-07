@@ -1,3 +1,4 @@
+//FAVORITES
 export const DETAIL_CARD = "DETAIL_CARD";
 export const DELETE_CARD = "DELETE_CARD";
 export const FILTER = "FILTER";
@@ -14,15 +15,6 @@ export const detailCard = () => {
       payload: data,
     });
   };
-  // return async (dispatch) => {
-  //   const resp = await fetch(`https://rickandmortyapi.com/api/character/${id}`);
-  //   const data = await resp.json();
-
-  //   dispatch({
-  //     type: DETAIL_CARD,
-  //     payload: data,
-  //   });
-  // };
 };
 
 export const deleteCard = (id) => {
@@ -54,4 +46,26 @@ export const orderCards = (id) => {
 
 export const clearFav = () => {
   return { type: CLEAR_FAV };
+};
+
+//USERS
+export const LOGIN_USER = "LOGIN_USER";
+export const LOGOUT_USER = "LOGOUT_USER";
+
+export const loginUser = ({ user, pass }) => {
+  return async (dispatch) => {
+    try {
+      const resp = await fetch(
+        `http://localhost:3001/rickandmorty/users?user=${user}&password=${pass}`
+      );
+      const data = await resp.json();
+
+      dispatch({
+        type: LOGIN_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 };

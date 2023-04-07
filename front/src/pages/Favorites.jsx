@@ -5,7 +5,7 @@ import * as actions from "../redux/actions";
 import "./Favorites.css";
 
 function Favorites({ onClose }) {
-  const favorites = useSelector((state) => state.favorites);
+  const { favorites } = useSelector((state) => state.fav);
   const dispatch = useDispatch();
 
   useEffect(() => {

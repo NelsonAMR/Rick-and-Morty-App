@@ -3,12 +3,15 @@ import "./Form.css";
 import logo from "../assets/logo.png";
 import validation from "../helpers/validationForm";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../redux/actions";
 
 function Form() {
+  const { access } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [userData, setUserData] = useState({ user: "", pass: "" });
   const [errors, setErrors] = useState({});
-  const [access, setAccess] = useState(false);
 
   const handleChange = (e) => {
     const prop = e.target.name;
@@ -19,6 +22,7 @@ function Form() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const { user, pass } = userData;
 
     if (!user || !pass) {
@@ -32,9 +36,9 @@ function Form() {
     }
 
     if (!Object.entries(errors).length) {
+      dispatch(loginUser({ user, pass }));
       setUserData({ user: "", pass: "" });
       setErrors({});
-      setAccess(true);
     } else {
       alert("Debe llenar todos los campos");
     }

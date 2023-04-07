@@ -8,7 +8,7 @@ import "./Card.css";
 export default function Card(props) {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const favorites = useSelector((state) => state.favorites);
+  const { favorites } = useSelector((state) => state.fav);
   const [isFav, setIsFav] = useState(false);
 
   const addFavorite = (character) => {
