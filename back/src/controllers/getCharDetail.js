@@ -1,5 +1,10 @@
-const getCharDetail = (res, ID) => {
-  fetch(`https://rickandmortyapi.com/api/character/${ID}`)
+require("dotenv").config();
+const { URL } = process.env;
+
+const getCharDetail = (req, res) => {
+  const { id } = req.params;
+
+  fetch(`${URL}/${id}`)
     .then((resp) => resp.json())
     .then((data) => {
       const obj = {
@@ -11,9 +16,9 @@ const getCharDetail = (res, ID) => {
         species: data.species,
       };
 
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify(obj));
-    });
+      res.json(obj);
+    })
+    .catch((err) => res.status(500).json(err.message));
 };
 
 module.exports = getCharDetail;

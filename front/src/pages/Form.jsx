@@ -36,6 +36,7 @@ function Form() {
     }
 
     if (!Object.entries(errors).length) {
+      window.localStorage.setItem("access", JSON.stringify(true));
       dispatch(loginUser({ user, pass }));
       setUserData({ user: "", pass: "" });
       setErrors({});

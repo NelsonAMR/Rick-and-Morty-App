@@ -1,8 +1,8 @@
-import { LOGIN_USER } from "../actions";
+import { LOGIN_USER, LOGOUT_USER } from "../actions";
 
 const initialState = {
-  user: "",
-  access: false,
+  // user: "",
+  access: JSON.parse(window.localStorage.getItem("access")) || false,
 };
 
 const userReducer = (state = initialState, { type, payload }) => {
@@ -10,16 +10,25 @@ const userReducer = (state = initialState, { type, payload }) => {
     case LOGIN_USER:
       return {
         ...state,
-        user: payload.user,
-        access: payload.user ? true : false,
+        // user: payload.user,
+        access: payload.user
+          ? JSON.parse(window.localStorage.getItem("access"))
+          : false,
       };
-    default: {
+
+    case LOGOUT_USER:
       return {
         ...state,
-        user: (state.user = ""),
-        access: (state.access = false),
+        // user: (state.user = ""),
+        access: JSON.parse(window.localStorage.getItem("access")),
       };
-    }
+
+    default:
+      return {
+        ...state,
+        // user: (state.user = ""),
+        access: JSON.parse(window.localStorage.getItem("access")),
+      };
   }
 };
 

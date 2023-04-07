@@ -1,21 +1,29 @@
-const { getCipherInfo } = require("crypto");
-const http = require("http");
-const getCharById = require("./controllers/getCharById");
-const getCharDetail = require("./controllers/getCharDetail");
+const express = require("express");
+const cors = require("cors");
+const morgan = require("morgan");
 
-http
-  .createServer((req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    const { url } = req;
+const router = require("./routes/index");
+const sequelize = require("./dbConnection");
 
-    if (url.includes("onsearch")) {
-      const id = url.split("/").at(-1);
-      getCharById(res, id);
-    }
+require("dotenv").config();
+require("./models/User");
+require("./models/Favorite");
 
-    if (url.includes("detail")) {
-      const id = url.split("/").at(-1);
-      getCharDetail(res, id);
-    }
-  })
-  .listen(3001, () => console.log("Listen on port 3001"));
+const server = express();
+const { PORT } = process.env;
+
+server.use(cors());
+server.use(express.json());
+server.use(morgan("dev"));
+server.use("/rickandmorty", router);
+
+async function main() {
+  try {
+    await sequelize.sync({ force: false });
+    server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+  } catch (error) {
+    console.error({ error: error.message });
+  }
+}
+
+main();

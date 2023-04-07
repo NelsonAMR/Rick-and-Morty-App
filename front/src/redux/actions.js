@@ -69,3 +69,11 @@ export const loginUser = ({ user, pass }) => {
     }
   };
 };
+
+export const logoutUser = () => {
+  return (dispatch) => {
+    window.localStorage.setItem("access", JSON.stringify(false));
+
+    dispatch({ type: LOGOUT_USER });
+  };
+};

@@ -1,22 +1,25 @@
-const getCharById = (res, ID) => {
-  fetch(`https://rickandmortyapi.com/api/character/${ID}`)
+require("dotenv").config();
+const { URL } = process.env;
+
+const getCharById = (req, res) => {
+  const { id } = req.params;
+
+  fetch(`${URL}/${id}`)
     .then((resp) => resp.json())
     .then((data) => {
       const obj = {
         id: data.id,
-        image: data.image,
         name: data.name,
-        gender: data.gender,
         species: data.species,
+        image: data.image,
+        gender: data.gender,
+        status: data.status,
+        origin: data.origin.name,
       };
 
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify(obj));
+      res.json(obj);
     })
-    .catch((err) => {
-      res.writeHead(500, { "Content-Type": "text/plain" });
-      res.end(err.message);
-    });
+    .catch((err) => res.status(500).json(err.message));
 };
 
 module.exports = getCharById;
