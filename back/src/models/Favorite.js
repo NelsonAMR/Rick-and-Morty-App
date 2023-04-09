@@ -4,14 +4,10 @@ const sequelize = require("../dbConnection");
 const Favorite = sequelize.define(
   "favorites",
   {
-    key: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
       unique: true,
     },
     name: {

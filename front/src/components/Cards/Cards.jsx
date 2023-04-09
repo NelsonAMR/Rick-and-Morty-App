@@ -3,6 +3,7 @@ import "./Cards.css";
 
 export default function Cards(props) {
   const { characters } = props;
+
   return (
     <div className="cards">
       {characters.map((char) => (

@@ -6,12 +6,13 @@ import "./Favorites.css";
 
 function Favorites({ onClose }) {
   const { favorites } = useSelector((state) => state.fav);
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(actions.clearFav());
-    dispatch(actions.detailCard());
-  }, [dispatch]);
+    dispatch(actions.detailCard(user));
+  }, [dispatch, user]);
 
   const handleSelect1 = (event) => {
     dispatch(actions.orderCards(event.target.value));

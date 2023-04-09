@@ -31,7 +31,7 @@ const User = sequelize.define(
   }
 );
 
-module.exports = User;
-
 User.belongsToMany(Favorite, { through: "User_Favorite" });
 Favorite.belongsToMany(User, { through: "User_Favorite" });
+
+module.exports = User;

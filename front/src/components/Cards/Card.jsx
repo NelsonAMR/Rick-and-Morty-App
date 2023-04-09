@@ -9,17 +9,22 @@ export default function Card(props) {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const { favorites } = useSelector((state) => state.fav);
+  const { user } = useSelector((state) => state.user);
   const [isFav, setIsFav] = useState(false);
 
-  const addFavorite = (character) => {
-    fetch("http://localhost:3001/rickandmorty/fav", {
-      method: "POST",
-      headers: {
-        Accept: "application.json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(character),
-    });
+  const addFavorite = async (data) => {
+    try {
+      await fetch("http://localhost:3001/rickandmorty/fav", {
+        method: "POST",
+        headers: {
+          Accept: "application.json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleFav = () => {
@@ -28,7 +33,7 @@ export default function Card(props) {
       setIsFav(false);
     } else {
       if (!isFav) {
-        addFavorite({ ...props });
+        addFavorite({ ...props, user });
         setIsFav(true);
       } else {
         dispatch(actions.deleteCard(props.id));

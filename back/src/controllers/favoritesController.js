@@ -1,4 +1,5 @@
 const Favorite = require("../models/Favorite");
+const User = require("../models/User");
 
 const getFavs = async (req, res) => {
   try {
@@ -14,19 +15,35 @@ const getFavs = async (req, res) => {
 
 const createFav = async (req, res) => {
   try {
-    const { id, name, origin, status, image, species, gender } = req.body;
+    const { id, name, origin, status, image, species, gender, user } = req.body;
 
     if (!id || !name || !origin || !status || !image || !species || !gender) {
       throw Error("Faltan datos");
     }
 
-    await Favorite.create({ id, name, origin, status, image, species, gender });
+    const [newFav] = await Favorite.findOrCreate({
+      where: {
+        id,
+        name,
+        origin,
+        status,
+        image,
+        species,
+        gender,
+      },
+    });
 
-    res.status(200);
-    res.json({ msg: "created" });
+    const userFind = await User.findOne({ where: { user } });
+
+    if (!userFind) {
+      throw Error("El usuario no existe");
+    }
+
+    await userFind.addFavorite(newFav.id);
+
+    res.status(200).json({ msg: "created" });
   } catch (error) {
-    res.status(400);
-    res.json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 

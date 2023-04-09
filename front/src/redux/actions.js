@@ -5,14 +5,18 @@ export const FILTER = "FILTER";
 export const ORDER = "ORDER";
 export const CLEAR_FAV = "CLEAR_FAV";
 
-export const detailCard = () => {
+export const detailCard = (user) => {
   return async (dispatch) => {
-    const resp = await fetch("http://localhost:3001/rickandmorty/fav");
+    const resp = await fetch(
+      `http://localhost:3001/rickandmorty/users/${user}`
+    );
     const data = await resp.json();
+
+    const favorites = data[0].favorites;
 
     dispatch({
       type: DETAIL_CARD,
-      payload: data,
+      payload: favorites,
     });
   };
 };
@@ -59,7 +63,7 @@ export const loginUser = ({ user, pass }) => {
         `http://localhost:3001/rickandmorty/users?user=${user}&password=${pass}`
       );
       const data = await resp.json();
-
+      console.log(data);
       dispatch({
         type: LOGIN_USER,
         payload: data,
@@ -72,6 +76,7 @@ export const loginUser = ({ user, pass }) => {
 
 export const logoutUser = () => {
   return (dispatch) => {
+    window.localStorage.setItem("user", JSON.stringify(null));
     window.localStorage.setItem("access", JSON.stringify(false));
 
     dispatch({ type: LOGOUT_USER });

@@ -5,6 +5,7 @@ const {
   createUser,
   getUser,
   deleteUser,
+  getFavsByUser,
 } = require("../controllers/usersControllers");
 const {
   deleteFav,
@@ -23,6 +24,7 @@ router.post("/fav", createFav);
 router.delete("/fav/:id", deleteFav);
 
 router.get("/users", getUser);
+router.get("/users/:user", getFavsByUser);
 router.post("/users", createUser);
 router.delete("/users/:id", deleteUser);
 

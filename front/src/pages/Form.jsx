@@ -4,7 +4,7 @@ import logo from "../assets/logo.png";
 import validation from "../helpers/validationForm";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../redux/actions";
+import { detailCard, loginUser } from "../redux/actions";
 
 function Form() {
   const { access } = useSelector((state) => state.user);
@@ -36,10 +36,10 @@ function Form() {
     }
 
     if (!Object.entries(errors).length) {
-      window.localStorage.setItem("access", JSON.stringify(true));
       dispatch(loginUser({ user, pass }));
-      setUserData({ user: "", pass: "" });
-      setErrors({});
+      dispatch(detailCard(user));
+      window.localStorage.setItem("user", JSON.stringify(user));
+      window.localStorage.setItem("access", JSON.stringify(true));
     } else {
       alert("Debe llenar todos los campos");
     }
@@ -59,15 +59,13 @@ function Form() {
           <input
             type="text"
             name="user"
-            placeholder="Ingresa tu correo"
+            placeholder="Ingresa tu usuario"
             autoComplete="off"
             value={userData.user}
             onChange={handleChange}
             className={errors.user && "error"}
           />
           {errors.user && <p>{errors.user}</p>}
-        </div>
-        <div className="form-camp">
           <input
             type="password"
             name="pass"
@@ -79,8 +77,20 @@ function Form() {
           />
           {errors.pass && <p>{errors.pass}</p>}
         </div>
-        <button type="submit" className="form-button">
-          Ingresar
+        <button type="submit" className="form-button log-btn">
+          Iniciar Sesíon
+        </button>
+        <div className="or">
+          <hr />
+          <p> O </p>
+          <hr />
+        </div>
+        <button
+          type="button"
+          className="form-button sign-btn"
+          onClick={() => navigate("/signup")}
+        >
+          Registrarse
         </button>
       </form>
     </div>
