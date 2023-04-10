@@ -1,23 +1,15 @@
+const { search } = require("../routes");
+
 require("dotenv").config();
 const { URL } = process.env;
 
 const getCharById = (req, res) => {
-  const { id } = req.params;
+  const { page, name } = req.query;
 
-  fetch(`${URL}/${id}`)
+  fetch(`${URL}/?page=${page}&name=${name}`)
     .then((resp) => resp.json())
     .then((data) => {
-      const obj = {
-        id: data.id,
-        name: data.name,
-        species: data.species,
-        image: data.image,
-        gender: data.gender,
-        status: data.status,
-        origin: data.origin.name,
-      };
-
-      res.json(obj);
+      res.json(data);
     })
     .catch((err) => res.status(500).json(err.message));
 };

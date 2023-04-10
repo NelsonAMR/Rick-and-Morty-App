@@ -1,9 +1,7 @@
 import Card from "./Card";
 import "./Cards.css";
 
-export default function Cards(props) {
-  const { characters } = props;
-
+export default function Cards({ characters }) {
   return (
     <div className="cards">
       {characters.map((char) => (
@@ -13,10 +11,9 @@ export default function Cards(props) {
           name={char.name}
           species={char.species}
           gender={char.gender}
-          origin={char.origin}
+          origin={char.origin?.name}
           status={char.status}
           image={char.image}
-          onClose={props.onClose}
         />
       ))}
     </div>

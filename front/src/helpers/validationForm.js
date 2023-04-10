@@ -4,7 +4,7 @@ function validation(userData) {
   const errors = {};
 
   if (userData.user) {
-    if (userData.user.length > 8) {
+    if (userData.user.length > 12) {
       errors.user = "Usuario no valido";
     }
   }

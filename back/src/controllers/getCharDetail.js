@@ -12,7 +12,7 @@ const getCharDetail = (req, res) => {
         name: data.name,
         gender: data.gender,
         status: data.status,
-        origin: data.origin,
+        location: data.location,
         species: data.species,
       };
 

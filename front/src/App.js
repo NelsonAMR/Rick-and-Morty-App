@@ -14,24 +14,28 @@ import { useSelector } from "react-redux";
 function App() {
   const { access } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
 
-  const url = "http://localhost:3001/rickandmorty/onsearch";
+  const url = "http://localhost:3001/rickandmorty/chars";
   const [characters, setCharacters] = useState([]);
-  const onSearch = (character) => {
-    fetch(`${url}/${character}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.name && !characters.find((char) => char.id === data.id)) {
-          setCharacters((oldChars) => [data, ...oldChars]);
-        } else {
-          window.alert("No hay personajes con ese ID");
-        }
-      });
+  const [info, setInfo] = useState({});
+
+  const showCards = async () => {
+    try {
+      const resp = await fetch(`${url}/?page=${page}&name=${search}`);
+      const data = await resp.json();
+
+      setInfo({ ...info, ...data.info });
+      setCharacters([...data.results]);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
-  const onClose = (id) => {
-    setCharacters(characters.filter((character) => character.id !== id));
-  };
+  useEffect(() => {
+    showCards(); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, search]);
 
   const { pathname } = useLocation();
 
@@ -44,14 +48,21 @@ function App() {
       <Routes>
         <Route path="/" element={<Form />} />
         <Route path="/signup" element={<CreateUser />} />
-        <Route element={<Header onSearch={onSearch} />}>
-          <Route
-            path="/home"
-            element={<Cards characters={characters} onClose={onClose} />}
-          />
+        <Route
+          element={
+            <Header
+              setSearch={setSearch}
+              setPage={setPage}
+              setInfo={setInfo}
+              info={info}
+              page={page}
+            />
+          }
+        >
+          <Route path="/home" element={<Cards characters={characters} />} />
           <Route path="/about" element={<About />} />
           <Route path="/detail/:id" element={<Detail />} />
-          <Route path="/favorites" element={<Favorites onClose={onClose} />} />
+          <Route path="/favorites" element={<Favorites />} />
         </Route>
         <Route path="/*" element={<Error />} />
       </Routes>

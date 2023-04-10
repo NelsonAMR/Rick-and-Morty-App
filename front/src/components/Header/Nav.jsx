@@ -3,10 +3,10 @@ import Links from "./Links";
 import SearchBar from "./SearchBar";
 import "./Nav.css";
 
-function Nav({ onSearch }) {
+function Nav({ setSearch, setPage }) {
   return (
     <div className="nav">
-      <SearchBar onSearch={onSearch} />
+      <SearchBar setSearch={setSearch} setPage={setPage} />
       <Links />
     </div>
   );

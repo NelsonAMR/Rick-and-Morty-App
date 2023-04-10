@@ -1,18 +1,20 @@
-import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import "./SearchBar.css";
 
-export default function SearchBar({ onSearch }) {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const [character, setCharacter] = useState("");
-  const handleChange = (e) => setCharacter(e.target.value);
+export default function SearchBar({ setSearch, setPage }) {
+  const handleChange = (e) => {
+    setPage(1);
+    setSearch(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(character);
-    setCharacter("");
-    pathname !== "/home" && navigate("/home");
+    // pathname !== "/home" && navigate("/home");
   };
+
+  useEffect(() => {
+    setSearch("");
+  }, [setSearch]);
 
   return (
     <form className="search" onSubmit={handleSubmit}>
@@ -20,7 +22,7 @@ export default function SearchBar({ onSearch }) {
         type="text"
         className="search-input"
         onChange={handleChange}
-        value={character}
+        // value={character}
       />
       <button type="submit" className="search-btn">
         Search

@@ -15,7 +15,7 @@ const {
 
 const router = express.Router();
 
-router.get("/onsearch/:id", getCharById);
+router.get("/chars", getCharById);
 
 router.get("/detail/:id", getCharDetail);
 

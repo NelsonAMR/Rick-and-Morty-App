@@ -6,6 +6,7 @@ import "./Favorites.css";
 
 function Favorites({ onClose }) {
   const { favorites } = useSelector((state) => state.fav);
+
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 

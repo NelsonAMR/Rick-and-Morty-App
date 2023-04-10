@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 //FAVORITES
 export const DETAIL_CARD = "DETAIL_CARD";
 export const DELETE_CARD = "DELETE_CARD";
@@ -7,17 +9,21 @@ export const CLEAR_FAV = "CLEAR_FAV";
 
 export const detailCard = (user) => {
   return async (dispatch) => {
-    const resp = await fetch(
-      `http://localhost:3001/rickandmorty/users/${user}`
-    );
-    const data = await resp.json();
+    try {
+      const resp = await fetch(
+        `http://localhost:3001/rickandmorty/users/${user}`
+      );
+      const data = await resp.json();
 
-    const favorites = data[0].favorites;
+      const favorites = data[0]?.favorites;
 
-    dispatch({
-      type: DETAIL_CARD,
-      payload: favorites,
-    });
+      dispatch({
+        type: DETAIL_CARD,
+        payload: favorites,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 };
 
@@ -62,14 +68,24 @@ export const loginUser = ({ user, pass }) => {
       const resp = await fetch(
         `http://localhost:3001/rickandmorty/users?user=${user}&password=${pass}`
       );
+
       const data = await resp.json();
-      console.log(data);
+
+      if (!resp.ok) {
+        throw Error(data.error);
+      }
+
+      window.localStorage.setItem("access", JSON.stringify(true));
+
       dispatch({
         type: LOGIN_USER,
         payload: data,
       });
     } catch (error) {
-      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: error.message,
+      });
     }
   };
 };

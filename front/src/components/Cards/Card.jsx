@@ -13,6 +13,7 @@ export default function Card(props) {
   const [isFav, setIsFav] = useState(false);
 
   const addFavorite = async (data) => {
+    console.log(data);
     try {
       await fetch("http://localhost:3001/rickandmorty/fav", {
         method: "POST",
@@ -28,6 +29,7 @@ export default function Card(props) {
   };
 
   const handleFav = () => {
+    console.log(props.id);
     if (pathname === "/favorites") {
       dispatch(actions.deleteCard(props.id));
       setIsFav(false);
@@ -52,7 +54,7 @@ export default function Card(props) {
 
   return (
     <div className="card">
-      {pathname !== "/favorites" ? (
+      {/* {pathname !== "/favorites" ? (
         <>
           <button
             className={`card-btn btn-fav ${isFav && "isFav"}`}
@@ -68,14 +70,13 @@ export default function Card(props) {
             X
           </button>
         </>
-      ) : (
-        <button
-          className={`card-btn btn-fav2 ${isFav && "isFav"}`}
-          onClick={handleFav}
-        >
-          &#x2764;
-        </button>
-      )}
+      ) : ( */}
+      <button
+        className={`card-btn btn-fav2 ${isFav && "isFav"}`}
+        onClick={handleFav}
+      >
+        &#x2764;
+      </button>
 
       <Link to={`/detail/${props.id}`}>
         <img className="card-image" src={props.image} alt={props.name} />

@@ -39,9 +39,6 @@ function Form() {
       dispatch(loginUser({ user, pass }));
       dispatch(detailCard(user));
       window.localStorage.setItem("user", JSON.stringify(user));
-      window.localStorage.setItem("access", JSON.stringify(true));
-    } else {
-      alert("Debe llenar todos los campos");
     }
   };
 
@@ -60,7 +57,7 @@ function Form() {
             type="text"
             name="user"
             placeholder="Ingresa tu usuario"
-            autoComplete="off"
+            autoComplete="on"
             value={userData.user}
             onChange={handleChange}
             className={errors.user && "error"}
@@ -70,7 +67,7 @@ function Form() {
             type="password"
             name="pass"
             placeholder="Ingresa tu contraseña"
-            autoComplete="off"
+            autoComplete="on"
             value={userData.pass}
             onChange={handleChange}
             className={errors.pass && "error"}

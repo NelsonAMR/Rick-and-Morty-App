@@ -3,10 +3,10 @@ import logo from "../assets/logo.png";
 import "./CreateUser.css";
 import { useNavigate } from "react-router-dom";
 import validation from "../helpers/validationForm";
+import Swal from "sweetalert2";
 
 function CreateUser() {
   const navigate = useNavigate();
-
   const [userData, setUserData] = useState({
     user: "",
     email: "",
@@ -17,13 +17,30 @@ function CreateUser() {
 
   const createUser = async (user, email, password) => {
     try {
-      await fetch("http://localhost:3001/rickandmorty/users", {
+      const response = await fetch("http://localhost:3001/rickandmorty/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user, email, password }),
       });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+
+      Swal.fire({
+        icon: "success",
+        title: "Bienvenido!",
+        text: "Usuario creado con exito",
+      });
+      navigate("/");
     } catch (error) {
-      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Opss...",
+        text: error.message,
+      });
     }
   };
 
@@ -46,13 +63,7 @@ function CreateUser() {
 
     if (!Object.entries(errors).length) {
       const { user, pass1, email } = userData;
-
       createUser(user, email, pass1);
-      navigate("/");
-    } else {
-      console.log(userData);
-      console.log(errors);
-      alert("Debe llenar correctamente todos los campos");
     }
   };
 
@@ -100,10 +111,10 @@ function CreateUser() {
             type="password"
             name="pass1"
             placeholder="Ingresa tu contraseña"
-            // autoComplete="off"
             value={userData.pass1}
             onChange={handleChange}
             className={errors.pass1 && "error"}
+            autoComplete="on"
           />
 
           {errors.pass1 && <p>{errors.pass1}</p>}
@@ -112,10 +123,10 @@ function CreateUser() {
             type="password"
             name="pass2"
             placeholder="Vuelve a ingresar tu contraseña"
-            autoComplete="off"
             value={userData.pass2}
             onChange={handleChange}
             className={errors.pass2 && "error"}
+            autoComplete="on"
           />
 
           {errors.pass2 && <p>{errors.pass2}</p>}

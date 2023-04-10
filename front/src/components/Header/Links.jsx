@@ -1,26 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./Links.css";
-import { useDispatch } from "react-redux";
-import { logoutUser } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { clearFav, logoutUser } from "../../redux/actions";
 
 function Links() {
+  const [hide, setHide] = useState(true);
+
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
+    dispatch(clearFav());
     dispatch(logoutUser());
-    window.location.reload();
+  };
+
+  const handleHide = () => {
+    if (hide) setHide(false);
+    else setHide(true);
   };
 
   return (
-    <nav className="links">
-      <NavLink to="/home">Home</NavLink>
-      <NavLink to="/about">About</NavLink>
-      <NavLink to="/favorites">Favorites</NavLink>
-      <NavLink to="/" onClick={handleLogout}>
-        Logout
-      </NavLink>
-    </nav>
+    <div className="nav-cont" onClick={handleHide}>
+      <div className="nav-user">
+        <button className="user-btn">{user}</button>
+      </div>
+      <nav className={`links ${hide && "hide"}`}>
+        <NavLink to="/home">Home</NavLink>
+        <NavLink to="/about">About</NavLink>
+        <NavLink to="/favorites">Favorites</NavLink>
+        <NavLink to="/" onClick={handleLogout}>
+          Salir
+        </NavLink>
+      </nav>
+    </div>
   );
 }
 
